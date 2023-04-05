@@ -9,10 +9,13 @@ using Unity.Notifications.Android;
 public class AndroidNoteHandler : MonoBehaviour
 {
 #if UNITY_ANDROID
+    //channelID are a constant string
     private const string ChannelId = "note_channel";
 
+    //Schedules a notification to be shown at a specified time
     public void ScheduleNote(DateTime dateTime)
     {
+        //Create a new notification channel
         AndroidNotificationChannel noteChannel = new AndroidNotificationChannel
         {
             Id = ChannelId,
@@ -21,8 +24,10 @@ public class AndroidNoteHandler : MonoBehaviour
             Importance = Importance.Default
         };
 
+        //Register notification channel to the Android notification system
         AndroidNotificationCenter.RegisterNotificationChannel(noteChannel);
 
+        //Create a new notification
         AndroidNotification notification = new AndroidNotification
         {
             Title = "Energy Recharged!",
@@ -31,7 +36,7 @@ public class AndroidNoteHandler : MonoBehaviour
             LargeIcon = "default",
             FireTime = dateTime
         };
-
+        //Sending notification using the channel ID
         AndroidNotificationCenter.SendNotification(notification, ChannelId);
     }
 #endif
